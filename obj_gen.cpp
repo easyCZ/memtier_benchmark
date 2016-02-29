@@ -327,7 +327,7 @@ unsigned int object_generator::random_range(unsigned int r_min, unsigned int r_m
 {
     int rn = m_random.get_random();
     int zipf_int = zipf(rn, r_max);
-    fprintf(stderr, "generated random = %u.\n", zipf);
+    fprintf(stdout, "generated random = %u.\n", zipf);
     return ((unsigned int) rn % (r_max - r_min + 1)) + r_min;
 }
 
