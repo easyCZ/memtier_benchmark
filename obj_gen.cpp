@@ -339,16 +339,20 @@ unsigned int object_generator::zipf(unsigned int r_min, unsigned int r_max)
 
     float sum = 0.0;
     int i;
-    for (i = 1; i <= rn; i++) {
+    for (i = 1; i <= r_max; i++) {
         sum += 1.0 / (float) pow((double) i, (double) (expo));
     }
 
     double  c;
     c = 1.0 / sum;
 
-    double probability = c / (float) pow((double) (i + 1), (double) (expo));
-    unsigned int random_zipf = (unsigned int) floor(probability * rn);
-    fprintf(stdout, "zipf %u %f, %u\n", rn, probability, random_zipf);
+    float sumc = 0.0;
+    for (i = 0; i < rn; i++) {
+        sumc += c / (float) pow((double) (i + 1), (double) (expo));
+    }
+
+    unsigned int random_zipf = (unsigned int) floor(sumc * rn);
+    fprintf(stdout, "zipf %u %f, %u\n", rn, sumc, random_zipf);
     return random_zipf;
 }
 
