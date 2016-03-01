@@ -345,7 +345,7 @@ unsigned int object_generator::zipf(unsigned int random, unsigned int r_max)
 
     double probability = c / (float) pow((double) (i + 1), (double) (expo));
     unsigned int random_zipf = (unsigned int) floor(probability * random);
-    fprintf(stdout, "zipf %u\n", random_zipf);
+    fprintf(stdout, "zipf %u %u, %u\n", random, r_max, random_zipf);
     return random_zipf;
 }
 
