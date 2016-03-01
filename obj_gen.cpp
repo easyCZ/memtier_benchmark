@@ -372,6 +372,7 @@ unsigned int object_generator::get_key_index(int iter)
         k = zipf(m_key_min, m_key_max);
     } else if(iter==OBJECT_GENERATOR_KEY_GAUSSIAN) {
         k = normal_distribution(m_key_min, m_key_max, m_key_stddev, m_key_median);
+        fprintf(stdout, "gauss %u", k);
     } else {
         if (m_next_key[iter] < m_key_min)
             m_next_key[iter] = m_key_min;
