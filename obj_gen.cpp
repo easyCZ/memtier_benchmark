@@ -365,6 +365,7 @@ unsigned int object_generator::normal_distribution(unsigned int r_min, unsigned 
 unsigned int object_generator::get_key_index(int iter)
 {
     assert(iter < OBJECT_GENERATOR_KEY_ITERATORS && iter >= OBJECT_GENERATOR_KEY_GAUSSIAN);
+    fprintf(stdout, "iter %u", iter);
 
     unsigned int k;
     if (iter==OBJECT_GENERATOR_KEY_RANDOM) {
