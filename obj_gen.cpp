@@ -327,6 +327,8 @@ unsigned int object_generator::random_range(unsigned int r_min, unsigned int r_m
 {
     int rn = m_random.get_random();
 
+    unsigned int randomed = ((unsigned int) rn % (r_max - r_min + 1)) + r_min;
+
     float sum = 0.0;
     double  c;
     float expo;
@@ -349,7 +351,7 @@ unsigned int object_generator::random_range(unsigned int r_min, unsigned int r_m
     }
     c = 1.0 / sum;
 
-    for (i = 0; i < rn; i++) {
+    for (i = 0; i < randomed; i++) {
         sumc += c / (float) pow((double) (i + 1), (double) (expo));
     }
 
