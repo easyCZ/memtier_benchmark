@@ -326,72 +326,28 @@ void object_generator::set_key_distribution(double key_stddev, double key_median
 unsigned int object_generator::random_range(unsigned int r_min, unsigned int r_max)
 {
     int rn = m_random.get_random();
-
-    unsigned int randomed = ((unsigned int) rn % (r_max - r_min + 1)) + r_min;
-
-    float sum = 0.0;
-    double  c;
-    float expo;
-    int i;
-    float sumc = 0.0;
-
-    float theta = 0.5;
-    int N = r_max;
-
-
-    expo = 1 - theta;
-
-    /*
-    * zipfian - p(i) = c / i ^^ (1 - theta) At x
-    * = 1, uniform * at x = 0, pure zipfian
-    */
-
-    for (i = 1; i <= N; i++) {
-        sum += 1.0 /(float) pow((double) i, (double) (expo));
-    }
-    c = 1.0 / sum;
-
-    for (i = 0; i < randomed; i++) {
-        sumc += c / (float) pow((double) (i + 1), (double) (expo));
-    }
-
-    unsigned int zipf_int = (unsigned int) floor(sumc * randomed);
-
-
-    fprintf(stdout, "zipf %u\n", zipf_int);
     return ((unsigned int) rn % (r_max - r_min + 1)) + r_min;
 }
 
-//unsigned int object_generator::zipf(unsigned int random, unsigned int r_max)
-//{
-//
-//    float sum = 0.0;
-//    double  c;
-//    float expo;
-//    int i;
-//
-//    float theta = 0.5;
-//    int N = r_max;
-//
-//
-//    expo = 1 - theta;
-//
-//    /*
-//    * zipfian - p(i) = c / i ^^ (1 - theta) At x
-//    * = 1, uniform * at x = 0, pure zipfian
-//    */
-//
-//    for (i = 1; i <= N; i++) {
-//        sum += 1.0 /(float) pow((double) i, (double) (expo));
-//
-//    }
-//    c = 1.0 / sum;
-//
-//    double prob = c / (float) pow((double) (i + 1), (double) (expo));
-//
-//    return (unsigned int) floor(prob * random);
-//
-//}
+unsigned int object_generator::zipf(unsigned int random, unsigned int r_max)
+{
+    float theta = 0.5;
+    float expo = 1 - theta;
+
+    float sum = 0.0;
+    int i;
+    for (i = 1; i <= r_max; i++) {
+        sum += 1.0 / (float) pow((double) i, (double) (expo));
+    }
+
+    double  c;
+    c = 1.0 / sum;
+
+    double probability = c / (float) pow((double) (i + 1), (double) (expo));
+    unsigned int random_zipf = (unsigned int) floor(probability * random);
+    fprintf(stdout, "zipf %u\n", random_zipf);
+    return random_zipf;
+}
 
 // return a random number between r_min and r_max using normal distribution according to r_stddev
 unsigned int object_generator::normal_distribution(unsigned int r_min, unsigned int r_max, double r_stddev, double r_median)
@@ -406,6 +362,7 @@ unsigned int object_generator::get_key_index(int iter)
     unsigned int k;
     if (iter==OBJECT_GENERATOR_KEY_RANDOM) {
         k = random_range(m_key_min, m_key_max);
+        k = zipf(k, m_key_max);
     } else if(iter==OBJECT_GENERATOR_KEY_GAUSSIAN) {
         k = normal_distribution(m_key_min, m_key_max, m_key_stddev, m_key_median);
     } else {
