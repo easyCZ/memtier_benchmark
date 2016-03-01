@@ -331,6 +331,7 @@ unsigned int object_generator::random_range(unsigned int r_min, unsigned int r_m
     double  c;
     float expo;
     int i;
+    float sumc = 0.0;
 
     float theta = 0.5;
     int N = r_max;
@@ -345,13 +346,14 @@ unsigned int object_generator::random_range(unsigned int r_min, unsigned int r_m
 
     for (i = 1; i <= N; i++) {
         sum += 1.0 /(float) pow((double) i, (double) (expo));
-
     }
     c = 1.0 / sum;
 
-    double prob = c / (float) pow((double) (i + 1), (double) (expo));
+    for (i = 0; i < rn; i++) {
+        sumc += c / (float) pow((double) (i + 1), (double) (expo));
+    }
 
-    unsigned int zipf_int = (unsigned int) floor(prob * rn);
+    unsigned int zipf_int = (unsigned int) floor(sumc * rn);
 
 
     fprintf(stdout, "zipf %u\n", zipf_int);
