@@ -329,14 +329,17 @@ unsigned int object_generator::random_range(unsigned int r_min, unsigned int r_m
     return ((unsigned int) rn % (r_max - r_min + 1)) + r_min;
 }
 
-unsigned int object_generator::zipf(unsigned int random, unsigned int r_max)
+unsigned int object_generator::zipf(unsigned int r_min, unsigned int r_max)
 {
+    int rn = m_random.get_random();
+    rn = ((unsigned int) rn % (r_max - r_min + 1)) + r_min;
+
     float theta = 0.5;
     float expo = 1 - theta;
 
     float sum = 0.0;
     int i;
-    for (i = 1; i <= r_max; i++) {
+    for (i = 1; i <= rn; i++) {
         sum += 1.0 / (float) pow((double) i, (double) (expo));
     }
 
@@ -344,8 +347,8 @@ unsigned int object_generator::zipf(unsigned int random, unsigned int r_max)
     c = 1.0 / sum;
 
     double probability = c / (float) pow((double) (i + 1), (double) (expo));
-    unsigned int random_zipf = (unsigned int) floor(probability * random);
-    fprintf(stdout, "zipf %u %u, %u\n", random, probability, random_zipf);
+    unsigned int random_zipf = (unsigned int) floor(probability * rn);
+    fprintf(stdout, "zipf %u %f, %u\n", rn, probability, random_zipf);
     return random_zipf;
 }
 
@@ -361,8 +364,8 @@ unsigned int object_generator::get_key_index(int iter)
 
     unsigned int k;
     if (iter==OBJECT_GENERATOR_KEY_RANDOM) {
-        k = random_range(m_key_min, m_key_max);
-        k = zipf(k, m_key_max);
+//        k = random_range(m_key_min, m_key_max);
+        k = zipf(m_key_min, m_key_max);
     } else if(iter==OBJECT_GENERATOR_KEY_GAUSSIAN) {
         k = normal_distribution(m_key_min, m_key_max, m_key_stddev, m_key_median);
     } else {
