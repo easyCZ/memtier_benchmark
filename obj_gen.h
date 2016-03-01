@@ -112,7 +112,7 @@ protected:
     void alloc_value_buffer(const char* copy_from);
     void random_init(void);
     unsigned int random_range(unsigned int r_min, unsigned int r_max);
-    unsigned int zipf(unsigned int r_min, unsigned int r_max);
+//    unsigned int zipf(unsigned int r_min, unsigned int r_max);
     unsigned int normal_distribution(unsigned int r_min, unsigned int r_max, double r_stddev, double r_median);
     unsigned int get_key_index(int iter);
 public:    
