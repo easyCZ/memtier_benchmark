@@ -352,7 +352,7 @@ unsigned int object_generator::zipf(unsigned int r_min, unsigned int r_max)
     }
 
     unsigned int random_zipf = (unsigned int) floor(sumc * rn);
-    fprintf(stdout, "zipf %u %f, %u\n", rn, sumc, random_zipf);
+//    fprintf(stdout, "zipf %u %f, %u\n", rn, sumc, random_zipf);
     return random_zipf;
 }
 
