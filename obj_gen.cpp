@@ -355,7 +355,7 @@ unsigned int object_generator::random_range(unsigned int r_min, unsigned int r_m
         sumc += c / (float) pow((double) (i + 1), (double) (expo));
     }
 
-    unsigned int zipf_int = (unsigned int) floor(sumc * rn);
+    unsigned int zipf_int = (unsigned int) floor(sumc * randomed);
 
 
     fprintf(stdout, "zipf %u\n", zipf_int);
