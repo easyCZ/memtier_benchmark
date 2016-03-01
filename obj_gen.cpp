@@ -334,7 +334,7 @@ unsigned int object_generator::zipf(unsigned int r_min, unsigned int r_max)
     int rn = m_random.get_random();
     rn = ((unsigned int) rn % (r_max - r_min + 1)) + r_min;
 
-    float theta = 0.2;
+    float theta = 0.8;
     float expo = 1 - theta;
 
     float sum = 0.0;
